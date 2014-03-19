@@ -4,7 +4,7 @@
 #
 # === Parameters:
 #
-#   $hostname   - optional - Changes the hostname (be aware that it will break
+#   $hostname     - optional - Changes the hostname (be aware that it will break
 #                            something)
 #                            Note: When you reboot/restart puppet, it will
 #                            generate a new certificate and a new certificate
@@ -12,13 +12,14 @@
 #                            sign it (if autosign is off).  You will also have to
 #                            provide a new node definition in the manifest based
 #                            on the new hostname.
-#   $gateway    - optional - Sets the default gateway
-#   $gatewaydev - optional - Determines the device to use as the default gateway
+#   $gateway      - optional - Sets the default gateway
+#   $gatewaydev   - optional - Determines the device to use as the default gateway
 #                            Overrides $gateway in network::global.  Must have
 #                            $gateway defined in network::if or network::bond.
-#   $nisdomain  - optional - Configures the NIS domainname.
-#   $vlan       - optional - yes|no to enable VLAN kernel module
-#   $nozeroconf - optional
+#   $nisdomain    - optional - Configures the NIS domainname.
+#   $vlan         - optional - yes|no to enable VLAN kernel module
+#   $ipv6_support - optional - yes|no to enable ipv6 support
+#   $nozeroconf   - optional
 #
 # === Actions:
 #
@@ -31,12 +32,13 @@
 # === Sample Usage:
 #
 #   class { 'network::global':
-#     hostname   => 'host.domain.tld',
-#     gateway    => '1.2.3.1',
-#     gatewaydev => 'eth0',
-#     nisdomain  => 'domain.tld',
-#     vlan       => 'yes',
-#     nozeroconf => 'yes',
+#     hostname      => 'host.domain.tld',
+#     gateway       => '1.2.3.1',
+#     gatewaydev    => 'eth0',
+#     nisdomain     => 'domain.tld',
+#     vlan          => 'yes',
+#     nozeroconf    => 'yes',
+#     ipv6_support  => 'yes',
 #   }
 #
 # === TODO:
@@ -57,6 +59,7 @@ class network::global (
   $gatewaydev = '',
   $nisdomain  = '',
   $vlan       = '',
+  $ipv6_support = '',
   $nozeroconf = ''
 ) {
   # Validate our data
