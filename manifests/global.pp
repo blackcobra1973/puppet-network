@@ -5,17 +5,17 @@
 # === Parameters:
 #
 #   $hostname     - optional - Changes the hostname (be aware that it will break
-#                            something)
-#                            Note: When you reboot/restart puppet, it will
-#                            generate a new certificate and a new certificate
-#                            request, based on the new hostname; you will have to
-#                            sign it (if autosign is off).  You will also have to
-#                            provide a new node definition in the manifest based
-#                            on the new hostname.
+#                               something)
+#                               Note: When you reboot/restart puppet, it will
+#                               generate a new certificate and a new certificate
+#                               request, based on the new hostname; you will have to
+#                               sign it (if autosign is off).  You will also have to
+#                               provide a new node definition in the manifest based
+#                               on the new hostname.
 #   $gateway      - optional - Sets the default gateway
 #   $gatewaydev   - optional - Determines the device to use as the default gateway
-#                            Overrides $gateway in network::global.  Must have
-#                            $gateway defined in network::if or network::bond.
+#                               Overrides $gateway in network::global.  Must have
+#                               $gateway defined in network::if or network::bond.
 #   $nisdomain    - optional - Configures the NIS domainname.
 #   $vlan         - optional - yes|no to enable VLAN kernel module
 #   $ipv6_support - optional - yes|no to enable ipv6 support
@@ -54,14 +54,15 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network::global (
-  $hostname   = '',
-  $gateway    = '',
-  $gatewaydev = '',
-  $nisdomain  = '',
-  $vlan       = '',
-  $ipv6_support = '',
-  $nozeroconf = ''
-) {
+  $hostname       = '',
+  $gateway        = '',
+  $gatewaydev     = '',
+  $nisdomain      = '',
+  $vlan           = '',
+  $ipv6_support   = '',
+  $nozeroconf     = ''
+)
+{
   # Validate our data
   if $gateway != '' {
     if ! is_ip_address($gateway) { fail("${gateway} is not an IP address.") }
@@ -72,7 +73,7 @@ class network::global (
     validate_re($vlan, $states, '$vlan must be either "yes" or "no".')
   }
 
-  include 'network'
+#  include 'network'
 
   file { 'network.sysconfig':
     ensure  => 'present',
@@ -81,6 +82,6 @@ class network::global (
     group   => 'root',
     path    => '/etc/sysconfig/network',
     content => template('network/network.erb'),
-    notify  => Service['network'],
+#    notify  => Service['network'],
   }
 } # class global
