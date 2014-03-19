@@ -22,7 +22,21 @@
 #
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
-class network {
+class network (
+  $network_alias            = {},
+  $network_alias_range      = {},
+  $network_bond_bridge      = {},
+  $network_bond_dynamic     = {},
+  $network_bond_slave       = {},
+  $network_bond_static      = {},
+  $network_bridge_dynamic   = {},
+  $network_bridge_static    = {},
+  $network_if_bridge        = {},
+  $network_if_dynamic       = {},
+  $network_if_static        = {},
+  $network_route            = {},
+)
+{
   # Only run on RedHat derived systems.
   case $::osfamily {
     'RedHat': { }
@@ -92,73 +106,74 @@ class network {
 #
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
-define network_if_base (
-  $ensure,
-  $ipaddress,
-  $netmask,
-  $macaddress,
-  $gateway = '',
-  $bootproto = 'none',
-  $userctl = false,
-  $mtu = '',
-  $ethtool_opts = '',
-  $bonding_opts = undef,
-  $isalias = false,
-  $peerdns = false,
-  $dns1 = '',
-  $dns2 = '',
-  $domain = '',
-  $bridge = ''
-) {
+####  Not used anymore
+#define network_if_base (
+#  $ensure,
+#  $ipaddress,
+#  $netmask,
+#  $macaddress,
+#  $gateway = '',
+#  $bootproto = 'none',
+#  $userctl = false,
+#  $mtu = '',
+#  $ethtool_opts = '',
+#  $bonding_opts = undef,
+#  $isalias = false,
+#  $peerdns = false,
+#  $dns1 = '',
+#  $dns2 = '',
+#  $domain = '',
+#  $bridge = ''
+#) {
   # Validate our booleans
-  validate_bool($userctl)
-  validate_bool($isalias)
-  validate_bool($peerdns)
+#  validate_bool($userctl)
+#  validate_bool($isalias)
+#  validate_bool($peerdns)
   # Validate our regular expressions
-  $states = [ '^up$', '^down$' ]
-  validate_re($ensure, $states, '$ensure must be either "up" or "down".')
+#  $states = [ '^up$', '^down$' ]
+#  validate_re($ensure, $states, '$ensure must be either "up" or "down".')
 
-  include 'network'
+#  include 'network'
 
-  $interface = $name
+#  $interface = $name
 
   # Deal with the case where $dns2 is non-empty and $dns1 is empty.
-  if $dns2 != '' {
-    if $dns1 == '' {
-      $dns1_real = $dns2
-      $dns2_real = ''
-    } else {
-      $dns1_real = $dns1
-      $dns2_real = $dns2
-    }
-  } else {
-    $dns1_real = $dns1
-    $dns2_real = $dns2
-  }
+#  if $dns2 != '' {
+#    if $dns1 == '' {
+#      $dns1_real = $dns2
+#      $dns2_real = ''
+#    } else {
+#      $dns1_real = $dns1
+#      $dns2_real = $dns2
+#    }
+#  } else {
+#    $dns1_real = $dns1
+#    $dns2_real = $dns2
+#  }
 
-  if $isalias {
-    $onparent = $ensure ? {
-      'up'    => 'yes',
-      'down'  => 'no',
-      default => undef,
-    }
-    $iftemplate = template('network/ifcfg-alias.erb')
-  } else {
-    $onboot = $ensure ? {
-      'up'    => 'yes',
-      'down'  => 'no',
-      default => undef,
-    }
-    $iftemplate = template('network/ifcfg-eth.erb')
-  }
+#  if $isalias {
+#    $onparent = $ensure ? {
+#      'up'    => 'yes',
+#      'down'  => 'no',
+#      default => undef,
+#    }
+#    $iftemplate = template('network/ifcfg-alias.erb')
+#  } else {
+#    $onboot = $ensure ? {
+#      'up'    => 'yes',
+#      'down'  => 'no',
+#      default => undef,
+#    }
+#    $iftemplate = template('network/ifcfg-eth.erb')
+#  }
 
-  file { "ifcfg-${interface}":
-    ensure  => 'present',
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    path    => "/etc/sysconfig/network-scripts/ifcfg-${interface}",
-    content => $iftemplate,
-    notify  => Service['network'],
-  }
-} # define network_if_base
+#  file { "ifcfg-${interface}":
+#    ensure  => 'present',
+#    mode    => '0644',
+#    owner   => 'root',
+#    group   => 'root',
+#    path    => "/etc/sysconfig/network-scripts/ifcfg-${interface}",
+#    content => $iftemplate,
+#    notify  => Service['network'],
+#  }
+#} # define network_if_base
