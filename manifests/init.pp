@@ -45,12 +45,17 @@ class network (
     }
   }
 
-  service { 'network':
-    ensure     => 'running',
-    enable     => true,
-    hasrestart => true,
-    hasstatus  => true,
+#  include stdlib
+
+  class { 'network::service':
   }
+
+#  service { 'network':
+#    ensure     => 'running',
+#    enable     => true,
+#    hasrestart => true,
+#    hasstatus  => true,
+#  }
 } # class network
 
 # == Definition: network_if_base
