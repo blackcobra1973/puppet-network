@@ -120,4 +120,4 @@ define network::if::base (
     content => $iftemplate,
     notify  => Service['network'],
   }
-} # define network_if_base
+} # define network::if::base

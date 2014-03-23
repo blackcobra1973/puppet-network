@@ -54,7 +54,7 @@ define network::bond::static (
   # Validate our data
   if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
 
-  network_if_base { $title:
+  network::if::base { $title:
     ensure       => $ensure,
     ipaddress    => $ipaddress,
     netmask      => $netmask,
