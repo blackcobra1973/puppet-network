@@ -23,6 +23,13 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network (
+  $hostname                 = '',
+  $gateway                  = '',
+  $gatewaydev               = '',
+  $nisdomain                = '',
+  $vlan                     = '',
+  $ipv6_support             = '',
+  $nozeroconf               = '',
   $network_alias            = {},
   $network_alias_range      = {},
   $network_bond_bridge      = {},
@@ -49,6 +56,25 @@ class network (
 
   class { 'network::service':
   }
+
+  class { 'network::global':
+    hostname       => $hostname,
+    gateway        => $gateway,
+    gatewaydev     => $gatewaydev,
+    nisdomain      => $nisdomain,
+    vlan           => $vlan,
+    ipv6_support   => $ipv6_support,
+    nozeroconf     => $nozeroconf,
+  }
+
+  anchor { 'network::begin':
+    before => Class['network::global'],
+    notify => Class['network::service'],
+  }
+  anchor { 'network::end':
+    require => Class['network::service'],
+  }
+
 
 #  service { 'network':
 #    ensure     => 'running',
