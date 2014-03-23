@@ -30,6 +30,7 @@ class network (
   $vlan                     = '',
   $ipv6_support             = '',
   $nozeroconf               = '',
+  $route_new_format         = false,
   $network_alias            = {},
   $network_alias_range      = {},
   $network_bond_bridge      = {},
