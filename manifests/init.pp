@@ -67,6 +67,31 @@ class network (
     nozeroconf     => $nozeroconf,
   }
 
+  validate_hash($network_alias)
+  create_resources('network::alias', $network_alias)
+  validate_hash($network_alias_range)
+  create_resources('network::alias::range', $network_alias_range)
+  validate_hash($network_bond_bridge)
+  create_resources('network::bond::bridge', $network_bond_bridge)
+  validate_hash($network_bond_dynamic)
+  create_resources('network::bond::bridge', $network_bond_dynamic)
+  validate_hash($network_bond_slave)
+  create_resources('network::bond::bridge', $network_bond_slave)
+  validate_hash($network_bond_static)
+  create_resources('network::bond::bridge', $network_bond_static)
+  validate_hash($network_bridge_dynamic)
+  create_resources('network::bridge::dynamic', $network_bridge_dynamic)
+  validate_hash($network_bridge_static)
+  create_resources('network::bridge::static', $network_bridge_static)
+  validate_hash($network_if_bridge)
+  create_resources('network::if::bridge', $network_if_bridge)
+  validate_hash($network_if_dynamic)
+  create_resources('network::if::dynamic', $network_if_dynamic)
+  validate_hash($network_if_static)
+  create_resources('network::if::static', $network_if_static)
+  validate_hash($network_route)
+  create_resources('network::route', $network_route)
+
   anchor { 'network::begin':
     before => Class['network::global'],
     notify => Class['network::service'],
