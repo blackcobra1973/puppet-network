@@ -41,8 +41,6 @@ define network::bond::slave (
     fail("${macaddress} is not a MAC address.")
   }
 
-  include 'network'
-
   $interface = $name
 
   file { "ifcfg-${interface}":

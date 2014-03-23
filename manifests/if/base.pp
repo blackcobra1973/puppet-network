@@ -77,8 +77,6 @@ define network::if::base (
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
 
-  include 'network'
-
   $interface = $name
 
   # Deal with the case where $dns2 is non-empty and $dns1 is empty.

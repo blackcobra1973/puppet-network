@@ -73,8 +73,6 @@ class network::global (
     validate_re($vlan, $states, '$vlan must be either "yes" or "no".')
   }
 
-  include 'network'
-
   file { 'network.sysconfig':
     ensure  => 'present',
     mode    => '0644',

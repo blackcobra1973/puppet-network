@@ -67,8 +67,6 @@ define network::bridge::static (
   validate_bool($userctl)
   validate_bool($stp)
 
-  include 'network'
-
   $interface = $name
 
   # Deal with the case where $dns2 is non-empty and $dns1 is empty.

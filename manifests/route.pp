@@ -49,8 +49,6 @@ define network::route (
   validate_array($netmask)
   validate_array($gateway)
 
-  include 'network'
-
   $interface = $name
 
   file { "route-${interface}":
