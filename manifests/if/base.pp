@@ -93,6 +93,8 @@ define network::if::base (
     $dns2_real = $dns2
   }
 
+  notify {"DNS1 is defined as: ${dns1}  DNS1 Real is defined as: ${dns1_real}":}
+
   if $isalias {
     $onparent = $ensure ? {
       'up'    => 'yes',
