@@ -50,7 +50,7 @@ define network::bridge::dynamic (
   validate_bool($stp)
 
   $interface = $name
-  $ipaddress = ''
+  $ipv4address = ''
   $netmask = ''
   $gateway = ''
 

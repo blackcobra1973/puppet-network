@@ -5,7 +5,7 @@
 # === Parameters:
 #
 #   $ensure        - required - up|down
-#   $ipaddress     - required
+#   $ipv4address     - required
 #   $netmask       - required
 #   $gateway       - optional
 #   $userctl       - optional - defaults to false
@@ -25,7 +25,7 @@
 #
 #   network::bridge::static { 'br0':
 #     ensure        => 'up',
-#     ipaddress     => '10.21.30.248',
+#     ipv4address     => '10.21.30.248',
 #     netmask       => '255.255.255.128',
 #     domain        => 'is.domain.com domain.com',
 #     stp           => true,
@@ -45,7 +45,7 @@
 #
 define network::bridge::static (
   $ensure,
-  $ipaddress,
+  $ipv4address,
   $netmask,
   $gateway = '',
   $bootproto = 'static',
@@ -62,7 +62,7 @@ define network::bridge::static (
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
   # Validate our data
-  if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
+  if ! is_ip_address($ipv4address) { fail("${ipv4address} is not an IP address.") }
   # Validate booleans
   validate_bool($userctl)
   validate_bool($stp)

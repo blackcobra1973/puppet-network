@@ -58,7 +58,7 @@ define network::if::dynamic (
 
   network::if::base { $title:
     ensure       => $ensure,
-    ipaddress    => '',
+    ipv4address  => '',
     netmask      => '',
     gateway      => '',
     macaddress   => $macaddy,

@@ -5,11 +5,11 @@
 #
 # === Parameters:
 #
-#   $ensure          - required - up|down|absent
-#   $ipaddress_start - required
-#   $ipaddress_start - required
-#   $clonenum_start  - required
-#   $noaliasrouting  - optional - false|true
+#   $ensure           - required - up|down|absent
+#   $ipaddress_start  - required
+#   $ipaddress_end    - required
+#   $clonenum_start   - required
+#   $noaliasrouting   - optional - false|true
 #
 # === Actions:
 #
