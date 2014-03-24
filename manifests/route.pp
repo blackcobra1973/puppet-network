@@ -51,30 +51,15 @@ define network::route (
   validate_array($gateway)
 
   $interface = $name
-  $newformat = $network::route_new_format
 
-  if $newformat {
-    file { "route-${interface}":
-      ensure  => 'present',
-      mode    => '0644',
-      owner   => 'root',
-      group   => 'root',
-      path    => "/etc/sysconfig/network-scripts/route-${interface}",
-      content => template('network/route-eth-new.erb'),
-      before  => File["ifcfg-${interface}"],
-      notify  => Service['network'],
-    }
-  }
-  else {
-    file { "route-${interface}":
-      ensure  => 'present',
-      mode    => '0644',
-      owner   => 'root',
-      group   => 'root',
-      path    => "/etc/sysconfig/network-scripts/route-${interface}",
-      content => template('network/route-eth.erb'),
-      before  => File["ifcfg-${interface}"],
-      notify  => Service['network'],
-    }
+  file { "route-${interface}":
+    ensure  => 'present',
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    path    => "/etc/sysconfig/network-scripts/route-${interface}",
+    content => template('network/route-eth.erb'),
+    before  => File["ifcfg-${interface}"],
+    notify  => Service['network'],
   }
 } # define network::route
