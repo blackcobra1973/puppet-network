@@ -56,9 +56,9 @@ define network::if::dynamic (
   # Validate booleans
   validate_bool($userctl)
 
-  network_if_base { $title:
+  network::if::base { $title:
     ensure       => $ensure,
-    ipaddress    => '',
+    ipv4address  => '',
     netmask      => '',
     gateway      => '',
     macaddress   => $macaddy,

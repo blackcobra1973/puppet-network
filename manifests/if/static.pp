@@ -41,7 +41,7 @@
 #
 define network::if::static (
   $ensure,
-  $ipaddress,
+  $ipv4address,
   $netmask,
   $gateway = '',
   $macaddress = '',
@@ -54,7 +54,7 @@ define network::if::static (
   $domain = ''
 ) {
   # Validate our data
-  if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
+  if ! is_ip_address($ipv4address) { fail("${ipv4address} is not an IP address.") }
 
   if ! is_mac_address($macaddress) {
     $macaddy = getvar("::macaddress_${title}")
@@ -64,9 +64,9 @@ define network::if::static (
   # Validate booleans
   validate_bool($userctl)
 
-  network_if_base { $title:
+  network::if::base { $title:
     ensure       => $ensure,
-    ipaddress    => $ipaddress,
+    ipv4address  => $ipv4address,
     netmask      => $netmask,
     gateway      => $gateway,
     macaddress   => $macaddy,

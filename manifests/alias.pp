@@ -6,7 +6,7 @@
 # === Parameters:
 #
 #   $ensure    - required - up|down
-#   $ipaddress - required
+#   $ipv4address - required
 #   $netmask   - required
 #   $gateway   - optional
 #   $userctl   - optional - defaults to false
@@ -19,7 +19,7 @@
 #
 #   network::alias { 'eth0:1':
 #     ensure    => 'up',
-#     ipaddress => '1.2.3.5',
+#     ipv4address => '1.2.3.5',
 #     netmask   => '255.255.255.0',
 #   }
 #
@@ -33,19 +33,19 @@
 #
 define network::alias (
   $ensure,
-  $ipaddress,
+  $ipv4address,
   $netmask,
   $gateway = '',
   $userctl = false
 ) {
   # Validate our data
-  if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
+  if ! is_ip_address($ipv4address) { fail("${ipv4address} is not an IP address.") }
   # Validate our booleans
   validate_bool($userctl)
 
-  network_if_base { $title:
+  network::if::base { $title:
     ensure       => $ensure,
-    ipaddress    => $ipaddress,
+    ipv4address  => $ipv4address,
     netmask      => $netmask,
     gateway      => $gateway,
     macaddress   => '',

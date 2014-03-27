@@ -9,7 +9,7 @@
 # === Parameters:
 #
 #   $ensure       - required - up|down
-#   $ipaddress    - required
+#   $ipv4address    - required
 #   $netmask      - required
 #   $macaddress   - required
 #   $gateway      - optional
@@ -53,7 +53,7 @@
 #
 define network::if::base (
   $ensure,
-  $ipaddress,
+  $ipv4address,
   $netmask,
   $macaddress,
   $gateway = '',
@@ -77,8 +77,6 @@ define network::if::base (
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
 
-  include 'network'
-
   $interface = $name
 
   # Deal with the case where $dns2 is non-empty and $dns1 is empty.
@@ -94,6 +92,8 @@ define network::if::base (
     $dns1_real = $dns1
     $dns2_real = $dns2
   }
+
+  #notify {"DNS1 is defined as: ${dns1}  DNS1 Real is defined as: ${dns1_real}":}
 
   if $isalias {
     $onparent = $ensure ? {
@@ -120,4 +120,4 @@ define network::if::base (
     content => $iftemplate,
     notify  => Service['network'],
   }
-} # define network_if_base
+} # define network::if::base

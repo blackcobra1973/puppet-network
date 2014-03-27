@@ -40,9 +40,9 @@ define network::bond::dynamic (
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
 
-  network_if_base { $title:
+  network::if::base { $title:
     ensure       => $ensure,
-    ipaddress    => '',
+    ipv4address  => '',
     netmask      => '',
     gateway      => '',
     macaddress   => '',

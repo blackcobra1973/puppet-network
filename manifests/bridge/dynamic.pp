@@ -49,10 +49,8 @@ define network::bridge::dynamic (
   validate_bool($userctl)
   validate_bool($stp)
 
-  include 'network'
-
   $interface = $name
-  $ipaddress = ''
+  $ipv4address = ''
   $netmask = ''
   $gateway = ''
 

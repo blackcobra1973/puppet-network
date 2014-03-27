@@ -43,13 +43,12 @@ define network::route (
   $ipaddress,
   $netmask,
   $gateway
-) {
+)
+{
   # Validate our arrays
   validate_array($ipaddress)
   validate_array($netmask)
   validate_array($gateway)
-
-  include 'network'
 
   $interface = $name
 

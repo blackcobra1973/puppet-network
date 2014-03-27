@@ -5,11 +5,11 @@
 #
 # === Parameters:
 #
-#   $ensure          - required - up|down|absent
-#   $ipaddress_start - required
-#   $ipaddress_start - required
-#   $clonenum_start  - required
-#   $noaliasrouting  - optional - false|true
+#   $ensure           - required - up|down|absent
+#   $ipaddress_start  - required
+#   $ipaddress_end    - required
+#   $clonenum_start   - required
+#   $noaliasrouting   - optional - false|true
 #
 # === Actions:
 #
@@ -48,8 +48,6 @@ define network::alias::range (
   # Validate our regular expressions
   $states = [ '^up$', '^down$', '^absent$' ]
   validate_re($ensure, $states, '$ensure must be either "up", "down", or "absent".')
-
-  include 'network'
 
   $interface = $name
   $onparent = $ensure ? {
