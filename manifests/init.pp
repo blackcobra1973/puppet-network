@@ -43,6 +43,7 @@ class network (
   $network_if_dynamic       = {},
   $network_if_static        = {},
   $network_route            = {},
+  $network_route_new        = {},
 )
 {
   # Only run on RedHat derived systems.
@@ -90,8 +91,16 @@ class network (
   create_resources('network::if::dynamic', $network_if_dynamic)
   validate_hash($network_if_static)
   create_resources('network::if::static', $network_if_static)
-  validate_hash($network_route)
-  create_resources('network::route', $network_route)
+  if $route_new_format
+  {
+    validate_hash($network_route_new)
+    create_resources('network::route', $network_route_new)
+  }
+  else
+  {
+    validate_hash($network_route)
+    create_resources('network::route', $network_route)
+  }
 
   anchor { 'network::begin':
     before => Class['network::global'],
