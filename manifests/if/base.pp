@@ -67,7 +67,11 @@ define network::if::base (
   $dns1 = '',
   $dns2 = '',
   $domain = '',
-  $bridge = ''
+  $bridge = '',
+  $ipv6address = '',
+  $ipv6gateway = '',
+  $ipv6init = true,
+  $ipv6autoconf = false
 ) {
   # Validate our booleans
   validate_bool($userctl)
@@ -93,7 +97,7 @@ define network::if::base (
     $dns2_real = $dns2
   }
 
-  #notify {"DNS1 is defined as: ${dns1}  DNS1 Real is defined as: ${dns1_real}":}
+  #notify {"DNS1: ${dns1}  DNS1 Real: ${dns1_real}":}
 
   if $isalias {
     $onparent = $ensure ? {
