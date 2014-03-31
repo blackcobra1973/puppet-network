@@ -51,7 +51,11 @@ define network::if::static (
   $peerdns = false,
   $dns1 = '',
   $dns2 = '',
-  $domain = ''
+  $domain = '',
+  $ipv6address = '',
+  $ipv6gateway = '',
+  $ipv6init = true,
+  $ipv6autoconf = false
 ) {
   # Validate our data
   if ! is_ip_address($ipv4address) { fail("${ipv4address} is not an IP address.") }
@@ -78,5 +82,9 @@ define network::if::static (
     dns1         => $dns1,
     dns2         => $dns2,
     domain       => $domain,
+    ipv6address  => $ipv6address,
+    ipv6gateway  => $ipv6gateway,
+    ipv6init     => $ipv6init,
+    ipv6autoconf => $ipv6autoconf,
   }
 } # define network::if::static
