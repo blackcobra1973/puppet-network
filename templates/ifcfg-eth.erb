@@ -29,6 +29,16 @@ TYPE=Ethernet
 <% if !@domain.empty? %>DOMAIN="<%= @domain %>"
 <% end -%>
 <% end -%>
+<% if !@ipv6address.empty? %>IPV6ADDR="<%= @ipv6address %>"
+<% end -%>
+<% if !@ipv6init %>IPV6INIT=no
+<% else %>IPV6INIT=yes
+<% end -%>
+<% if !@ipv6autoconf %>IPV6_AUTOCONF=no
+<% else %>IPV6_AUTOCONF=yes
+<% end -%>
+<% if !@ipv6gateway.empty? %>IPV6_DEFAULTGW=<%= @ipv6gateway %>
+<% end -%>
 <% if @userctl %>USERCTL=yes
 <% end -%>
 <% if !@bridge.empty? %>BRIDGE=<%= @bridge %>
