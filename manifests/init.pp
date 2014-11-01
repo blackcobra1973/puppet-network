@@ -31,6 +31,7 @@ class network (
   $ipv6_support             = '',
   $nozeroconf               = '',
   $route_new_format         = false,
+  $ip_interface_hash        = $network::ip_interface_hash,
   $network_alias            = {},
   $network_alias_range      = {},
   $network_bond_bridge      = {},
@@ -43,7 +44,7 @@ class network (
   $network_if_dynamic       = {},
   $network_if_static        = {},
   $network_route            = {},
-  $network_route_new        = {},
+#  $network_route_new        = {},
 )
 {
   # Only run on RedHat derived systems.
@@ -91,14 +92,15 @@ class network (
   create_resources('network::if::dynamic', $network_if_dynamic)
   validate_hash($network_if_static)
   create_resources('network::if::static', $network_if_static)
+  validate_hash($network_route)
   if $route_new_format
   {
-    validate_hash($network_route_new)
-    create_resources('network::route', $network_route_new)
+#    validate_hash($network_route)
+    create_resources('network::route', $network_route)
   }
   else
   {
-    validate_hash($network_route)
+#    validate_hash($network_route)
     create_resources('network::route', $network_route)
   }
 

@@ -42,24 +42,44 @@
 define network::route (
   $ipaddress,
   $netmask,
-  $gateway
+  $gateway,
+  $route_new_format   = $network::route_new_format,
+  $ipv4_routes  = {},
+  $ipv6_routes  = {},
 )
 {
-  # Validate our arrays
-  validate_array($ipaddress)
-  validate_array($netmask)
-  validate_array($gateway)
 
   $interface = $name
 
-  file { "route-${interface}":
-    ensure  => 'present',
-    mode    => '0644',
-    owner   => 'root',
-    group   => 'root',
-    path    => "/etc/sysconfig/network-scripts/route-${interface}",
-    content => template('network/route-eth.erb'),
-    before  => File["ifcfg-${interface}"],
-    notify  => Service['network'],
+  if $route_new_format
+  {
+    file { "route-${interface}":
+      ensure  => 'present',
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
+      path    => "/etc/sysconfig/network-scripts/route-${interface}",
+      content => template('network/route-eth-new.erb'),
+      before  => File["ifcfg-${interface}"],
+      notify  => Service['network'],
+    }
+  }
+  else
+  {
+    # Validate our arrays
+    validate_array($ipaddress)
+    validate_array($netmask)
+    validate_array($gateway)
+
+    file { "route-${interface}":
+      ensure  => 'present',
+      mode    => '0644',
+      owner   => 'root',
+      group   => 'root',
+      path    => "/etc/sysconfig/network-scripts/route-${interface}",
+      content => template('network/route-eth.erb'),
+      before  => File["ifcfg-${interface}"],
+      notify  => Service['network'],
+    }
   }
 } # define network::route

@@ -1,0 +1,9 @@
+###
+### File managed by Puppet
+###
+<% if !ipv4_routes.empty? -%>
+<% [ipv4_routes].flatten.each do |ipv4_routes| -%>
+<%= ipv4_routes %> dev <%= @interface %> <% end -%> <% end -%>
+<% if !ipv6_routes.empty? -%>
+<% [ipv6_routes].flatten.each do |ipv6_routes| -%>
+<%= ipv6_routes %> dev <%= @interface %> <% end -%> <% end -%>
