@@ -40,12 +40,12 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 define network::route (
-  $ipaddress,
-  $netmask,
-  $gateway,
   $route_new_format   = $network::route_new_format,
-  $ipv4_routes  = {},
-  $ipv6_routes  = {},
+  $ipaddress          = {},
+  $netmask            = {},
+  $gateway            = {},
+  $ipv4_routes        = {},
+  $ipv6_routes        = {},
 )
 {
 
