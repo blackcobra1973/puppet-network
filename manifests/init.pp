@@ -31,7 +31,7 @@ class network (
   $ipv6_support             = '',
   $nozeroconf               = '',
   $route_new_format         = false,
-  $ip_interface_hash        = $network::ip_interface_hash,
+  #$ip_interface_hash        = $network::ip_interface_hash,
   $network_alias            = {},
   $network_alias_range      = {},
   $network_bond_bridge      = {},
