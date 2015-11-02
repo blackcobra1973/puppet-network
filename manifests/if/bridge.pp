@@ -40,7 +40,7 @@ define network::if::bridge (
 
   network::if::base { $title:
     ensure       => $ensure,
-    ipv4address  => '',
+    ipaddress    => '',
     netmask      => '',
     gateway      => '',
     macaddress   => '',

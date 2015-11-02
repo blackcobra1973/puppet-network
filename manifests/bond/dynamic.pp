@@ -42,7 +42,7 @@ define network::bond::dynamic (
 
   network::if::base { $title:
     ensure       => $ensure,
-    ipv4address  => '',
+    ipaddress    => '',
     netmask      => '',
     gateway      => '',
     macaddress   => '',

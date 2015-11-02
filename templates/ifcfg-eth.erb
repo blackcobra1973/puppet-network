@@ -8,7 +8,7 @@ BOOTPROTO=<%= @bootproto %>
 ONBOOT=<%= @onboot %>
 HOTPLUG=<%= @onboot %>
 TYPE=Ethernet
-<% if !@ipv4address.empty? %>IPADDR=<%= @ipv4address %>
+<% if !@ipaddress.empty? %>IPADDR=<%= @ipaddress %>
 <% end -%>
 <% if !@netmask.empty? %>NETMASK=<%= @netmask %>
 <% end -%>

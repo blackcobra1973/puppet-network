@@ -37,7 +37,7 @@
 #
 define network::bond::static (
   $ensure,
-  $ipv4address,
+  $ipaddress,
   $netmask,
   $gateway = '',
   $mtu = '',
@@ -52,11 +52,11 @@ define network::bond::static (
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
   # Validate our data
-  if ! is_ip_address($ipv4address) { fail("${ipv4address} is not an IP address.") }
+  if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
 
   network::if::base { $title:
     ensure       => $ensure,
-    ipv4address  => $ipv4address,
+    ipaddress    => $ipaddress,
     netmask      => $netmask,
     gateway      => $gateway,
     macaddress   => '',

@@ -9,7 +9,7 @@
 # === Parameters:
 #
 #   $ensure       - required - up|down
-#   $ipv4address    - required
+#   $ipaddress    - required
 #   $netmask      - required
 #   $macaddress   - required
 #   $gateway      - optional
@@ -53,7 +53,7 @@
 #
 define network::if::base (
   $ensure,
-  $ipv4address,
+  $ipaddress,
   $netmask,
   $macaddress,
   $gateway = '',
