@@ -32,7 +32,8 @@ define network::if::bridge (
   $ensure,
   $bridge,
   $mtu = '',
-  $ethtool_opts = ''
+  $ethtool_opts = '',
+  $vlan = false,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -48,5 +49,6 @@ define network::if::bridge (
     mtu          => $mtu,
     ethtool_opts => $ethtool_opts,
     bridge       => $bridge,
+    vlan         => $vlan,
   }
 } # define network::if::bridge

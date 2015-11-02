@@ -44,3 +44,6 @@ TYPE=Ethernet
 <% if !@bridge.empty? %>BRIDGE=<%= @bridge %>
 <% end -%>
 NM_CONTROLLED=no
+<% if !@vlan %>VLAN=no
+<% else %>VLAN=yes
+<% end -%>

@@ -42,7 +42,8 @@ define network::if::dynamic (
   $bootproto = 'dhcp',
   $userctl = false,
   $mtu = '',
-  $ethtool_opts = ''
+  $ethtool_opts = '',
+  $vlan = false,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -68,5 +69,6 @@ define network::if::dynamic (
     userctl      => $userctl,
     mtu          => $mtu,
     ethtool_opts => $ethtool_opts,
+    vlan         => $vlan,
   }
 } # define network::if::dynamic
