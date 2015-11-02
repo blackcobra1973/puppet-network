@@ -2,18 +2,30 @@
 ### File managed by Puppet
 ###
 NETWORKING=yes
+<<<<<<< HEAD
 <% if !@ipv6_support.empty? %>NETWORKING_IPV6=<%= @ipv6_support %>
 <% end -%>
 <% if !@hostname.empty? %>HOSTNAME=<%= @hostname %>
 <% else %>HOSTNAME=<%= fqdn %>
+=======
+<% if !@ipv6networking %>NETWORKING_IPV6=no
+<% else %>NETWORKING_IPV6=yes
+<% if @ipv6gateway %>IPV6_DEFAULTGW=<%= @ipv6gateway %>
+>>>>>>> upstream/master
 <% end -%>
-<% if !@gateway.empty? %>GATEWAY=<%= @gateway %>
+<% if @ipv6defaultdev %>IPV6_DEFAULTDEV=<%= @ipv6defaultdev %>
 <% end -%>
-<% if !@gatewaydev.empty? %>GATEWAYDEV=<%= @gatewaydev %>
 <% end -%>
-<% if !@nisdomain.empty? %>NISDOMAIN=<%= @nisdomain %>
+<% if @hostname %>HOSTNAME=<%= @hostname %>
+<% else %>HOSTNAME=<%= scope.lookupvar('::fqdn') %>
 <% end -%>
-<% if !@vlan.empty? %>VLAN=<%= @vlan %>
+<% if @gateway %>GATEWAY=<%= @gateway %>
 <% end -%>
-<% if !@nozeroconf.empty? %>NOZEROCONF=<%= @nozeroconf %>
+<% if @gatewaydev %>GATEWAYDEV=<%= @gatewaydev %>
+<% end -%>
+<% if @nisdomain %>NISDOMAIN=<%= @nisdomain %>
+<% end -%>
+<% if @vlan %>VLAN=<%= @vlan %>
+<% end -%>
+<% if @nozeroconf %>NOZEROCONF=<%= @nozeroconf %>
 <% end -%>

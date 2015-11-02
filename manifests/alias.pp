@@ -35,7 +35,9 @@ define network::alias (
   $ensure,
   $ipaddress,
   $netmask,
-  $gateway = '',
+  $gateway = undef,
+  $ipv6address = undef,
+  $ipv6gateway = undef,
   $userctl = false
 ) {
   # Validate our data
@@ -48,6 +50,8 @@ define network::alias (
     ipaddress    => $ipaddress,
     netmask      => $netmask,
     gateway      => $gateway,
+    ipv6address  => $ipv6address,
+    ipv6gateway  => $ipv6gateway,
     macaddress   => '',
     bootproto    => 'none',
     userctl      => $userctl,

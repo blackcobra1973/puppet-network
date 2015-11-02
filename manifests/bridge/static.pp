@@ -8,14 +8,19 @@
 #   $ipaddress     - required
 #   $netmask       - required
 #   $gateway       - optional
+#   $ipv6address   - optional
+#   $ipv6gateway   - optional
 #   $userctl       - optional - defaults to false
 #   $peerdns       - optional
+#   $ipv6init      - optional - defaults to false
+#   $ipv6peerdns   - optional - defaults to false
 #   $dns1          - optional
 #   $dns2          - optional
 #   $domain        - optional
 #   $stp           - optional - defaults to false
 #   $delay         - optional - defaults to 30
 #   $bridging_opts - optional
+#   $scope         - optional
 #
 # === Actions:
 #
@@ -47,33 +52,50 @@ define network::bridge::static (
   $ensure,
   $ipaddress,
   $netmask,
-  $gateway = '',
+  $gateway = undef,
+  $ipv6address = undef,
+  $ipv6gateway = undef,
   $bootproto = 'static',
   $userctl = false,
   $peerdns = false,
-  $dns1 = '',
-  $dns2 = '',
-  $domain = '',
+  $ipv6init = false,
+  $ipv6peerdns = false,
+  $dns1 = undef,
+  $dns2 = undef,
+  $domain = undef,
   $stp = false,
   $delay = '30',
-  $bridging_opts = ''
+  $bridging_opts = undef,
+  $scope = undef
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
   # Validate our data
   if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
+  if $ipv6address {
+    if ! is_ip_address($ipv6address) { fail("${ipv6address} is not an IPv6 address.") }
+  }
   # Validate booleans
   validate_bool($userctl)
   validate_bool($stp)
+  validate_bool($ipv6init)
+  validate_bool($ipv6peerdns)
 
+  ensure_packages('bridge-utils')
+
+<<<<<<< HEAD
+=======
+  include '::network'
+
+>>>>>>> upstream/master
   $interface = $name
 
   # Deal with the case where $dns2 is non-empty and $dns1 is empty.
-  if $dns2 != '' {
-    if $dns1 == '' {
+  if $dns2 {
+    if !$dns1 {
       $dns1_real = $dns2
-      $dns2_real = ''
+      $dns2_real = undef
     } else {
       $dns1_real = $dns1
       $dns2_real = $dns2
@@ -96,6 +118,7 @@ define network::bridge::static (
     group   => 'root',
     path    => "/etc/sysconfig/network-scripts/ifcfg-${interface}",
     content => template('network/ifcfg-br.erb'),
+    require => Package['bridge-utils'],
     notify  => Service['network'],
   }
 } # define network::bridge::static

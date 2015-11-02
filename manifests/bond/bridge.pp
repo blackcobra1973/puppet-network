@@ -35,8 +35,8 @@
 define network::bond::bridge (
   $ensure,
   $bridge,
-  $mtu = '',
-  $ethtool_opts = '',
+  $mtu = undef,
+  $ethtool_opts = undef,
   $bonding_opts = 'miimon=100'
 ) {
   # Validate our regular expressions
@@ -50,6 +50,8 @@ define network::bond::bridge (
     gateway      => '',
     macaddress   => '',
     bootproto    => 'none',
+    ipv6address  => '',
+    ipv6gateway  => '',
     mtu          => $mtu,
     ethtool_opts => $ethtool_opts,
     bonding_opts => $bonding_opts,

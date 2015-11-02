@@ -31,8 +31,8 @@
 define network::if::bridge (
   $ensure,
   $bridge,
-  $mtu = '',
-  $ethtool_opts = ''
+  $mtu = undef,
+  $ethtool_opts = undef
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -45,6 +45,8 @@ define network::if::bridge (
     gateway      => '',
     macaddress   => '',
     bootproto    => 'none',
+    ipv6address  => '',
+    ipv6gateway  => '',
     mtu          => $mtu,
     ethtool_opts => $ethtool_opts,
     bridge       => $bridge,

@@ -32,8 +32,8 @@
 #
 define network::bond::dynamic (
   $ensure,
-  $mtu = '',
-  $ethtool_opts = '',
+  $mtu = undef,
+  $ethtool_opts = undef,
   $bonding_opts = 'miimon=100'
 ) {
   # Validate our regular expressions
@@ -47,6 +47,8 @@ define network::bond::dynamic (
     gateway      => '',
     macaddress   => '',
     bootproto    => 'dhcp',
+    ipv6address  => '',
+    ipv6gateway  => '',
     mtu          => $mtu,
     ethtool_opts => $ethtool_opts,
     bonding_opts => $bonding_opts,
