@@ -55,7 +55,8 @@ define network::if::static (
   $ipv6address = '',
   $ipv6gateway = '',
   $ipv6init = true,
-  $ipv6autoconf = false
+  $ipv6autoconf = false,
+  $vlan = false,
 ) {
   # Validate our data
   if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
@@ -86,5 +87,6 @@ define network::if::static (
     ipv6gateway  => $ipv6gateway,
     ipv6init     => $ipv6init,
     ipv6autoconf => $ipv6autoconf,
+    vlan         => $vlan,
   }
 } # define network::if::static

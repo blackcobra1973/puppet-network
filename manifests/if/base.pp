@@ -71,7 +71,8 @@ define network::if::base (
   $ipv6address = '',
   $ipv6gateway = '',
   $ipv6init = true,
-  $ipv6autoconf = false
+  $ipv6autoconf = false,
+  $vlan = false,
 ) {
   # Validate our booleans
   validate_bool($userctl)
