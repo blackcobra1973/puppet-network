@@ -50,7 +50,8 @@ define network::if::dynamic (
   $ethtool_opts    = undef,
   $peerdns         = false,
   $linkdelay       = undef,
-  $check_link_down = false
+  $check_link_down = false,
+  $vlan = false,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -81,5 +82,6 @@ define network::if::dynamic (
     peerdns         => $peerdns,
     linkdelay       => $linkdelay,
     check_link_down => $check_link_down,
+    vlan            => $vlan,
   }
 } # define network::if::dynamic

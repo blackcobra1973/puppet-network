@@ -50,7 +50,8 @@ define network::bond::static (
   $ipv6peerdns = false,
   $dns1 = undef,
   $dns2 = undef,
-  $domain = undef
+  $domain = undef,
+  $vlan = false,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -83,6 +84,7 @@ define network::bond::static (
     dns1         => $dns1,
     dns2         => $dns2,
     domain       => $domain,
+    vlan         => $vlan,
   }
 
   # Only install "alias bondN bonding" on old OSs that support

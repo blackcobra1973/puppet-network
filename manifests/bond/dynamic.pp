@@ -34,7 +34,8 @@ define network::bond::dynamic (
   $ensure,
   $mtu = undef,
   $ethtool_opts = undef,
-  $bonding_opts = 'miimon=100'
+  $bonding_opts = 'miimon=100',
+  $vlan = false,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -52,6 +53,7 @@ define network::bond::dynamic (
     mtu          => $mtu,
     ethtool_opts => $ethtool_opts,
     bonding_opts => $bonding_opts,
+    vlan         => $vlan,
   }
 
   # Only install "alias bondN bonding" on old OSs that support

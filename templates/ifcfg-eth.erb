@@ -68,3 +68,6 @@ check_link_down() {
 }
 <% end -%>
 NM_CONTROLLED=no
+<% if !@vlan %>VLAN=no
+<% else %>VLAN=yes
+<% end -%>
