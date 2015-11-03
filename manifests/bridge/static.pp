@@ -66,7 +66,8 @@ define network::bridge::static (
   $stp = false,
   $delay = '30',
   $bridging_opts = undef,
-  $scope = undef
+  $scope = undef,
+  $vlan = false,
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -81,6 +82,7 @@ define network::bridge::static (
   validate_bool($stp)
   validate_bool($ipv6init)
   validate_bool($ipv6peerdns)
+  validate_bool($vlan)
 
   ensure_packages('bridge-utils')
 
