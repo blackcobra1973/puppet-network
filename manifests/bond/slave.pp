@@ -34,6 +34,7 @@
 define network::bond::slave (
   $macaddress,
   $master,
+  $onboot = 'yes',
   $ethtool_opts = undef
 ) {
   # Validate our data
