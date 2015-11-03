@@ -64,9 +64,9 @@ define network::bond::static (
   # Validate booleans
   validate_bool($ipv6init)
   validate_bool($ipv6peerdns)
+  validate_bool($vlan)
 
-
-  network::if::base { $title:
+  network_if_base { $title:
     ensure       => $ensure,
     ipaddress    => $ipaddress,
     netmask      => $netmask,
