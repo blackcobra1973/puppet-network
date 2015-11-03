@@ -75,7 +75,7 @@ class network (
   validate_hash($network_bond_slave)
   create_resources('network::bond::slave', $network_bond_slave)
   validate_hash($network_bond_static)
-  create_resources('network::bond::bridge', $network_bond_static)
+  create_resources('network::bond::static', $network_bond_static)
   validate_hash($network_bridge_dynamic)
   create_resources('network::bridge::dynamic', $network_bridge_dynamic)
   validate_hash($network_bridge_static)
