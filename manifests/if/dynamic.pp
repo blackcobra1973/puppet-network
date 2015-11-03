@@ -67,6 +67,7 @@ define network::if::dynamic (
   # Validate booleans
   validate_bool($userctl)
   validate_bool($peerdns)
+  validate_bool($vlan)
 
   network_if_base { $title:
     ensure          => $ensure,

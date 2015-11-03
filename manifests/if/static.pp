@@ -89,8 +89,9 @@ define network::if::static (
   validate_bool($ipv6autoconf)
   validate_bool($peerdns)
   validate_bool($ipv6peerdns)
+  validate_bool($vlan)
 
-  network::if::base { $title:
+  network_if_base { $title:
     ensure       => $ensure,
     ipv6init     => $ipv6init,
     ipaddress    => $ipaddress,
