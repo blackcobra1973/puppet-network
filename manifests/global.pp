@@ -59,15 +59,15 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network::global (
-  $hostname       = undef,
-  $gateway        = undef,
-  $gatewaydev     = undef,
-  $ipv6gateway    = undef,
-  $ipv6defaultdev = undef,
-  $nisdomain      = undef,
-  $vlan           = undef,
-  $ipv6networking = false,
-  $nozeroconf     = undef,
+  $hostname       = $network::hostname,
+  $gateway        = $network::gateway,
+  $gatewaydev     = $network::gatewaydev,
+  $ipv6gateway    = $network::ipv6gateway,
+  $ipv6defaultdev = $network::ipv6defaultdev,
+  $nisdomain      = $network::nisdomain,
+  $vlan           = $network::vlan,
+  $ipv6networking = $network::ipv6_support,
+  $nozeroconf     = $network::nozeroconf,
 )
 {
   # Validate our data

@@ -23,28 +23,30 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network (
-#  $hostname                 = '',
-#  $gateway                  = '',
-#  $gatewaydev               = '',
-#  $nisdomain                = '',
-#  $vlan                     = '',
-#  $ipv6_support             = '',
-#  $nozeroconf               = '',
+  $hostname                 = undef,
+  $gateway                  = undef,
+  $gatewaydev               = undef,
+  $nisdomain                = undef,
+  $vlan                     = undef,
+  $ipv6_support             = true,
+  $ipv6gateway              = undef,
+  $ipv6defaultdev           = undef,
+  $nozeroconf               = undef,
   $route_new_format         = false,
   #$ip_interface_hash        = $network::ip_interface_hash,
-#  $network_alias            = {},
-#  $network_alias_range      = {},
-#  $network_bond_bridge      = {},
-#  $network_bond_dynamic     = {},
-#  $network_bond_slave       = {},
-#  $network_bond_static      = {},
-#  $network_bridge_dynamic   = {},
-#  $network_bridge_static    = {},
-#  $network_if_bridge        = {},
-#  $network_if_dynamic       = {},
-#  $network_if_static        = {},
-#  $network_route            = {},
-#  $network_route_new        = {},
+  $network_alias            = {},
+  $network_alias_range      = {},
+  $network_bond_bridge      = {},
+  $network_bond_dynamic     = {},
+  $network_bond_slave       = {},
+  $network_bond_static      = {},
+  $network_bridge_dynamic   = {},
+  $network_bridge_static    = {},
+  $network_if_bridge        = {},
+  $network_if_dynamic       = {},
+  $network_if_static        = {},
+  $network_route            = {},
+  $network_route_new        = {},
 )
 {
   # Only run on RedHat derived systems.
@@ -61,6 +63,45 @@ class network (
     hasrestart => true,
     hasstatus  => true,
   }
+
+  validate_hash($network_alias)
+  create_resources('network::alias', $network_alias)
+  validate_hash($network_alias_range)
+  create_resources('network::alias::range', $network_alias_range)
+  validate_hash($network_bond_bridge)
+  create_resources('network::bond::bridge', $network_bond_bridge)
+  validate_hash($network_bond_dynamic)
+  create_resources('network::bond::bridge', $network_bond_dynamic)
+  validate_hash($network_bond_slave)
+  create_resources('network::bond::bridge', $network_bond_slave)
+  validate_hash($network_bond_static)
+  create_resources('network::bond::bridge', $network_bond_static)
+  validate_hash($network_bridge_dynamic)
+  create_resources('network::bridge::dynamic', $network_bridge_dynamic)
+  validate_hash($network_bridge_static)
+  create_resources('network::bridge::static', $network_bridge_static)
+  validate_hash($network_if_bridge)
+  create_resources('network::if::bridge', $network_if_bridge)
+  validate_hash($network_if_dynamic)
+  create_resources('network::if::dynamic', $network_if_dynamic)
+  validate_hash($network_if_static)
+  create_resources('network::if::static', $network_if_static)
+  validate_hash($network_route)
+  if $route_new_format
+  {
+#    validate_hash($network_route)
+    create_resources('network::route', $network_route)
+  }
+  else
+  {
+#    validate_hash($network_route)
+    create_resources('network::route', $network_route)
+  }
+
+  anchor { 'network::begin': } ->
+  class   { 'network::global': }->
+  anchor { 'network::end': }
+
 } # class network
 
 # == Definition: network_if_base
@@ -202,40 +243,6 @@ define network_if_base (
     content => $iftemplate,
     notify  =>  Service['network'],
   }
-
-#  validate_hash($network_alias)
-#  create_resources('network::alias', $network_alias)
-#  validate_hash($network_alias_range)
-#  create_resources('network::alias::range', $network_alias_range)
-#  validate_hash($network_bond_bridge)
-#  create_resources('network::bond::bridge', $network_bond_bridge)
-#  validate_hash($network_bond_dynamic)
-#  create_resources('network::bond::bridge', $network_bond_dynamic)
-#  validate_hash($network_bond_slave)
-#  create_resources('network::bond::bridge', $network_bond_slave)
-#  validate_hash($network_bond_static)
-#  create_resources('network::bond::bridge', $network_bond_static)
-#  validate_hash($network_bridge_dynamic)
-#  create_resources('network::bridge::dynamic', $network_bridge_dynamic)
-#  validate_hash($network_bridge_static)
-#  create_resources('network::bridge::static', $network_bridge_static)
-#  validate_hash($network_if_bridge)
-#  create_resources('network::if::bridge', $network_if_bridge)
-#  validate_hash($network_if_dynamic)
-#  create_resources('network::if::dynamic', $network_if_dynamic)
-#  validate_hash($network_if_static)
-#  create_resources('network::if::static', $network_if_static)
-#  validate_hash($network_route)
-#  if $route_new_format
-#  {
-##    validate_hash($network_route)
-#    create_resources('network::route', $network_route)
-#  }
-#  else
-#  {
-##    validate_hash($network_route)
-#    create_resources('network::route', $network_route)
-#  }
 
 #  anchor { 'network::begin':
 #    before => Class['network::global'],
