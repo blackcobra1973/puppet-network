@@ -67,18 +67,6 @@ define network::if::dynamic (
   validate_bool($userctl)
   validate_bool($peerdns)
 
-<<<<<<< HEAD
-  network::if::base { $title:
-    ensure       => $ensure,
-    ipaddress    => '',
-    netmask      => '',
-    gateway      => '',
-    macaddress   => $macaddy,
-    bootproto    => $bootproto,
-    userctl      => $userctl,
-    mtu          => $mtu,
-    ethtool_opts => $ethtool_opts,
-=======
   network_if_base { $title:
     ensure          => $ensure,
     ipaddress       => '',
@@ -93,6 +81,5 @@ define network::if::dynamic (
     peerdns         => $peerdns,
     linkdelay       => $linkdelay,
     check_link_down => $check_link_down,
->>>>>>> upstream/master
   }
 } # define network::if::dynamic

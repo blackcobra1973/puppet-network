@@ -40,7 +40,6 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 define network::route (
-<<<<<<< HEAD
   $route_new_format   = $network::route_new_format,
   $ipaddress          = {},
   $netmask            = {},
@@ -49,18 +48,12 @@ define network::route (
   $ipv6_routes        = {},
 )
 {
-=======
-  $ipaddress,
-  $netmask,
-  $gateway
-) {
   # Validate our arrays
   validate_array($ipaddress)
   validate_array($netmask)
   validate_array($gateway)
 
   include '::network'
->>>>>>> upstream/master
 
   $interface = $name
 

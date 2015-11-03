@@ -56,20 +56,8 @@ class network (
   }
 
 #  include stdlib
+}
 
-<<<<<<< HEAD
-  class { 'network::service':
-  }
-
-  class { 'network::global':
-    hostname       => $hostname,
-    gateway        => $gateway,
-    gatewaydev     => $gatewaydev,
-    nisdomain      => $nisdomain,
-    vlan           => $vlan,
-    ipv6_support   => $ipv6_support,
-    nozeroconf     => $nozeroconf,
-=======
 # == Definition: network_if_base
 #
 # This definition is private, i.e. it is not intended to be called directly
@@ -181,7 +169,6 @@ define network_if_base (
   } else {
     $dns1_real = $dns1
     $dns2_real = $dns2
->>>>>>> upstream/master
   }
 
   validate_hash($network_alias)
@@ -227,4 +214,3 @@ define network_if_base (
   }
 
 } # class network
-

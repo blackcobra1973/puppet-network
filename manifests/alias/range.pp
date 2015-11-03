@@ -49,11 +49,8 @@ define network::alias::range (
   $states = [ '^up$', '^down$', '^absent$' ]
   validate_re($ensure, $states, '$ensure must be either "up", "down", or "absent".')
 
-<<<<<<< HEAD
-=======
-  include '::network'
+  #include '::network'
 
->>>>>>> upstream/master
   $interface = $name
   $onparent = $ensure ? {
     'up'    => 'yes',

@@ -49,13 +49,10 @@ define network::bridge::dynamic (
   validate_bool($userctl)
   validate_bool($stp)
 
-<<<<<<< HEAD
-=======
   ensure_packages('bridge-utils')
 
   include '::network'
 
->>>>>>> upstream/master
   $interface = $name
   $ipaddress = undef
   $netmask = undef

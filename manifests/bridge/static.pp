@@ -84,11 +84,8 @@ define network::bridge::static (
 
   ensure_packages('bridge-utils')
 
-<<<<<<< HEAD
-=======
   include '::network'
 
->>>>>>> upstream/master
   $interface = $name
 
   # Deal with the case where $dns2 is non-empty and $dns1 is empty.

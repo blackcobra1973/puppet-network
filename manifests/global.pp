@@ -4,24 +4,6 @@
 #
 # === Parameters:
 #
-<<<<<<< HEAD
-#   $hostname     - optional - Changes the hostname (be aware that it will break
-#                               something)
-#                               Note: When you reboot/restart puppet, it will
-#                               generate a new certificate and a new certificate
-#                               request, based on the new hostname; you will have to
-#                               sign it (if autosign is off).  You will also have to
-#                               provide a new node definition in the manifest based
-#                               on the new hostname.
-#   $gateway      - optional - Sets the default gateway
-#   $gatewaydev   - optional - Determines the device to use as the default gateway
-#                               Overrides $gateway in network::global.  Must have
-#                               $gateway defined in network::if or network::bond.
-#   $nisdomain    - optional - Configures the NIS domainname.
-#   $vlan         - optional - yes|no to enable VLAN kernel module
-#   $ipv6_support - optional - yes|no to enable ipv6 support
-#   $nozeroconf   - optional
-=======
 #   $hostname       - optional - Changes the hostname (be aware that it will break
 #                                something)
 #                                Note: When you reboot/restart puppet, it will
@@ -41,7 +23,6 @@
 #   $vlan           - optional - yes|no to enable VLAN kernel module
 #   $ipv6networking - optional - enables / disables IPv6 globally
 #   $nozeroconf     - optional
->>>>>>> upstream/master
 #
 # === Actions:
 #
@@ -54,15 +35,6 @@
 # === Sample Usage:
 #
 #   class { 'network::global':
-<<<<<<< HEAD
-#     hostname      => 'host.domain.tld',
-#     gateway       => '1.2.3.1',
-#     gatewaydev    => 'eth0',
-#     nisdomain     => 'domain.tld',
-#     vlan          => 'yes',
-#     nozeroconf    => 'yes',
-#     ipv6_support  => 'yes',
-=======
 #     hostname       => 'host.domain.tld',
 #     gateway        => '1.2.3.1',
 #     gatewaydev     => 'eth0',
@@ -72,7 +44,6 @@
 #     vlan           => 'yes',
 #     ipv6networking => true,
 #     nozeroconf     => 'yes',
->>>>>>> upstream/master
 #   }
 #
 # === TODO:
@@ -88,17 +59,7 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network::global (
-<<<<<<< HEAD
-  $hostname       = '',
-  $gateway        = '',
-  $gatewaydev     = '',
-  $nisdomain      = '',
-  $vlan           = '',
-  $ipv6_support   = '',
-  $nozeroconf     = ''
-)
 {
-=======
   $hostname       = undef,
   $gateway        = undef,
   $gatewaydev     = undef,
@@ -107,9 +68,9 @@ class network::global (
   $nisdomain      = undef,
   $vlan           = undef,
   $ipv6networking = false,
-  $nozeroconf     = undef
-) {
->>>>>>> upstream/master
+  $nozeroconf     = undef,
+)
+{
   # Validate our data
   if $gateway {
     if ! is_ip_address($gateway) { fail("${gateway} is not an IP address.") }
@@ -126,13 +87,10 @@ class network::global (
     validate_re($vlan, $states, '$vlan must be either "yes" or "no".')
   }
 
-<<<<<<< HEAD
-=======
   validate_bool($ipv6networking)
 
-  include '::network'
+  #include '::network'
 
->>>>>>> upstream/master
   file { 'network.sysconfig':
     ensure  => 'present',
     mode    => '0644',

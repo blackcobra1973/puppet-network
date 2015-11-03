@@ -62,22 +62,12 @@ define network::if::static (
   $mtu = undef,
   $ethtool_opts = undef,
   $peerdns = false,
-<<<<<<< HEAD
-  $dns1 = '',
-  $dns2 = '',
-  $domain = '',
-  $ipv6address = '',
-  $ipv6gateway = '',
-  $ipv6init = true,
-  $ipv6autoconf = false
-=======
   $ipv6peerdns = false,
   $dns1 = undef,
   $dns2 = undef,
   $domain = undef,
   $linkdelay = undef,
   $scope = undef
->>>>>>> upstream/master
 ) {
   # Validate our data
   if ! is_ip_address($ipaddress) { fail("${ipaddress} is not an IP address.") }
@@ -118,14 +108,7 @@ define network::if::static (
     dns1         => $dns1,
     dns2         => $dns2,
     domain       => $domain,
-<<<<<<< HEAD
-    ipv6address  => $ipv6address,
-    ipv6gateway  => $ipv6gateway,
-    ipv6init     => $ipv6init,
-    ipv6autoconf => $ipv6autoconf,
-=======
     linkdelay    => $linkdelay,
     scope        => $scope,
->>>>>>> upstream/master
   }
 } # define network::if::static

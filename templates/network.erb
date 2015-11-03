@@ -2,16 +2,9 @@
 ### File managed by Puppet
 ###
 NETWORKING=yes
-<<<<<<< HEAD
-<% if !@ipv6_support.empty? %>NETWORKING_IPV6=<%= @ipv6_support %>
-<% end -%>
-<% if !@hostname.empty? %>HOSTNAME=<%= @hostname %>
-<% else %>HOSTNAME=<%= fqdn %>
-=======
 <% if !@ipv6networking %>NETWORKING_IPV6=no
 <% else %>NETWORKING_IPV6=yes
 <% if @ipv6gateway %>IPV6_DEFAULTGW=<%= @ipv6gateway %>
->>>>>>> upstream/master
 <% end -%>
 <% if @ipv6defaultdev %>IPV6_DEFAULTDEV=<%= @ipv6defaultdev %>
 <% end -%>
