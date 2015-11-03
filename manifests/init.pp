@@ -23,27 +23,27 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network (
-  $hostname                 = '',
-  $gateway                  = '',
-  $gatewaydev               = '',
-  $nisdomain                = '',
-  $vlan                     = '',
-  $ipv6_support             = '',
-  $nozeroconf               = '',
+#  $hostname                 = '',
+#  $gateway                  = '',
+#  $gatewaydev               = '',
+#  $nisdomain                = '',
+#  $vlan                     = '',
+#  $ipv6_support             = '',
+#  $nozeroconf               = '',
   $route_new_format         = false,
   #$ip_interface_hash        = $network::ip_interface_hash,
-  $network_alias            = {},
-  $network_alias_range      = {},
-  $network_bond_bridge      = {},
-  $network_bond_dynamic     = {},
-  $network_bond_slave       = {},
-  $network_bond_static      = {},
-  $network_bridge_dynamic   = {},
-  $network_bridge_static    = {},
-  $network_if_bridge        = {},
-  $network_if_dynamic       = {},
-  $network_if_static        = {},
-  $network_route            = {},
+#  $network_alias            = {},
+#  $network_alias_range      = {},
+#  $network_bond_bridge      = {},
+#  $network_bond_dynamic     = {},
+#  $network_bond_slave       = {},
+#  $network_bond_static      = {},
+#  $network_bridge_dynamic   = {},
+#  $network_bridge_static    = {},
+#  $network_if_bridge        = {},
+#  $network_if_dynamic       = {},
+#  $network_if_static        = {},
+#  $network_route            = {},
 #  $network_route_new        = {},
 )
 {
@@ -55,8 +55,13 @@ class network (
     }
   }
 
-#  include stdlib
-}
+  service { 'network':
+    ensure     => 'running',
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
+} # class network
 
 # == Definition: network_if_base
 #
@@ -138,8 +143,8 @@ define network_if_base (
   $bridge          = undef,
   $linkdelay       = undef,
   $scope           = undef,
-  $linkdelay       = undef,
-  $check_link_down = false
+  $check_link_down = false,
+  $vlan            = false,
 ) {
   # Validate our booleans
   validate_bool($userctl)
@@ -149,6 +154,7 @@ define network_if_base (
   validate_bool($ipv6autoconf)
   validate_bool($ipv6peerdns)
   validate_bool($check_link_down)
+  validate_bool($vlan)
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
   validate_re($ensure, $states, '$ensure must be either "up" or "down".')
@@ -171,46 +177,72 @@ define network_if_base (
     $dns2_real = $dns2
   }
 
-  validate_hash($network_alias)
-  create_resources('network::alias', $network_alias)
-  validate_hash($network_alias_range)
-  create_resources('network::alias::range', $network_alias_range)
-  validate_hash($network_bond_bridge)
-  create_resources('network::bond::bridge', $network_bond_bridge)
-  validate_hash($network_bond_dynamic)
-  create_resources('network::bond::bridge', $network_bond_dynamic)
-  validate_hash($network_bond_slave)
-  create_resources('network::bond::bridge', $network_bond_slave)
-  validate_hash($network_bond_static)
-  create_resources('network::bond::bridge', $network_bond_static)
-  validate_hash($network_bridge_dynamic)
-  create_resources('network::bridge::dynamic', $network_bridge_dynamic)
-  validate_hash($network_bridge_static)
-  create_resources('network::bridge::static', $network_bridge_static)
-  validate_hash($network_if_bridge)
-  create_resources('network::if::bridge', $network_if_bridge)
-  validate_hash($network_if_dynamic)
-  create_resources('network::if::dynamic', $network_if_dynamic)
-  validate_hash($network_if_static)
-  create_resources('network::if::static', $network_if_static)
-  validate_hash($network_route)
-  if $route_new_format
-  {
-#    validate_hash($network_route)
-    create_resources('network::route', $network_route)
-  }
-  else
-  {
-#    validate_hash($network_route)
-    create_resources('network::route', $network_route)
+  if $isalias {
+    $onparent = $ensure ? {
+      'up'    => 'yes',
+      'down'  => 'no',
+      default => undef,
+    }
+    $iftemplate = template('network/ifcfg-alias.erb')
+  } else {
+    $onboot = $ensure ? {
+      'up'    => 'yes',
+      'down'  => 'no',
+      default => undef,
+    }
+    $iftemplate = template('network/ifcfg-eth.erb')
   }
 
-  anchor { 'network::begin':
-    before => Class['network::global'],
-    notify => Class['network::service'],
-  }
-  anchor { 'network::end':
-    require => Class['network::service'],
+  file { "ifcfg-${interface}":
+    ensure  => 'present',
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    path    => "/etc/sysconfig/network-scripts/ifcfg-${interface}",
+    content => $iftemplate,
+    notify  =>  Service['network'],
   }
 
-} # class network
+#  validate_hash($network_alias)
+#  create_resources('network::alias', $network_alias)
+#  validate_hash($network_alias_range)
+#  create_resources('network::alias::range', $network_alias_range)
+#  validate_hash($network_bond_bridge)
+#  create_resources('network::bond::bridge', $network_bond_bridge)
+#  validate_hash($network_bond_dynamic)
+#  create_resources('network::bond::bridge', $network_bond_dynamic)
+#  validate_hash($network_bond_slave)
+#  create_resources('network::bond::bridge', $network_bond_slave)
+#  validate_hash($network_bond_static)
+#  create_resources('network::bond::bridge', $network_bond_static)
+#  validate_hash($network_bridge_dynamic)
+#  create_resources('network::bridge::dynamic', $network_bridge_dynamic)
+#  validate_hash($network_bridge_static)
+#  create_resources('network::bridge::static', $network_bridge_static)
+#  validate_hash($network_if_bridge)
+#  create_resources('network::if::bridge', $network_if_bridge)
+#  validate_hash($network_if_dynamic)
+#  create_resources('network::if::dynamic', $network_if_dynamic)
+#  validate_hash($network_if_static)
+#  create_resources('network::if::static', $network_if_static)
+#  validate_hash($network_route)
+#  if $route_new_format
+#  {
+##    validate_hash($network_route)
+#    create_resources('network::route', $network_route)
+#  }
+#  else
+#  {
+##    validate_hash($network_route)
+#    create_resources('network::route', $network_route)
+#  }
+
+#  anchor { 'network::begin':
+#    before => Class['network::global'],
+#    notify => Class['network::service'],
+#  }
+#  anchor { 'network::end':
+#    require => Class['network::service'],
+#  }
+
+} # define network_if_base

@@ -48,10 +48,6 @@ define network::route (
   $ipv6_routes        = {},
 )
 {
-  # Validate our arrays
-  validate_array($ipaddress)
-  validate_array($netmask)
-  validate_array($gateway)
 
   include '::network'
 

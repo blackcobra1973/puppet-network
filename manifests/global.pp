@@ -59,7 +59,6 @@
 # Copyright (C) 2011 Mike Arnold, unless otherwise noted.
 #
 class network::global (
-{
   $hostname       = undef,
   $gateway        = undef,
   $gatewaydev     = undef,
@@ -89,7 +88,7 @@ class network::global (
 
   validate_bool($ipv6networking)
 
-  #include '::network'
+  include '::network'
 
   file { 'network.sysconfig':
     ensure  => 'present',
@@ -98,6 +97,6 @@ class network::global (
     group   => 'root',
     path    => '/etc/sysconfig/network',
     content => template('network/network.erb'),
-#    notify  => Service['network'],
+    notify  => Service['network'],
   }
 } # class global
