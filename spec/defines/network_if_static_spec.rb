@@ -92,6 +92,9 @@ describe 'network::if::static', :type => 'define' do
       :ipv6gateway  => '123:4567:89ab:cdef:123:4567:89ab:1',
       :linkdelay    => '5',
       :scope        => 'peer 1.2.3.1',
+      :defroute     => 'yes',
+      :metric       => '10',
+      :zone         => 'trusted',
     }
     end
     let :facts do {
@@ -132,6 +135,9 @@ describe 'network::if::static', :type => 'define' do
         'IPV6_PEERDNS=yes',
         'LINKDELAY=5',
         'SCOPE="peer 1.2.3.1"',
+        'DEFROUTE=yes',
+        'ZONE=trusted',
+        'METRIC=10',
         'NM_CONTROLLED=no',
       ])
     end
@@ -173,6 +179,60 @@ describe 'network::if::static', :type => 'define' do
       ])
     end
     it { should contain_service('network') }
+  end
+
+  context 'optional parameters - manage_hwaddr' do
+    let(:title) { 'eth0' }
+    let :params do {
+      :ensure         => 'up',
+      :ipaddress      => '1.2.3.4',
+      :netmask        => '255.255.255.0',
+      :manage_hwaddr  => false,
+    }
+    end
+    let :facts do {
+      :osfamily         => 'RedHat',
+      :macaddress_eth0 => 'bb:cc:bb:cc:bb:cc',
+    }
+    end
+    it { should contain_file('ifcfg-eth0').with(
+      :ensure => 'present',
+      :mode   => '0644',
+      :owner  => 'root',
+      :group  => 'root',
+      :path   => '/etc/sysconfig/network-scripts/ifcfg-eth0',
+      :notify => 'Service[network]'
+    )}
+    it 'should contain File[ifcfg-eth0] with required contents' do
+      verify_contents(catalogue, 'ifcfg-eth0', [
+        'DEVICE=eth0',
+        'BOOTPROTO=none',
+        'ONBOOT=yes',
+        'HOTPLUG=yes',
+        'TYPE=Ethernet',
+        'IPADDR=1.2.3.4',
+        'NETMASK=255.255.255.0',
+        'NM_CONTROLLED=no',
+      ])
+    end
+    it { should contain_service('network') }
+  end
+
+  context 'flush => true - ip addr flush' do
+    let(:title) { 'eth1' }
+    let :params do {
+      :ensure    => 'up',
+      :ipaddress => '1.2.3.4',
+      :netmask   => '255.255.255.0',
+      :flush     => true
+    }
+    end
+    let :facts do {
+      :osfamily        => 'RedHat',
+      :macaddress_eth1 => 'fe:fe:fe:aa:aa:aa',
+    }
+    end
+    it { should contain_exec('network-flush').with_command('ip addr flush dev eth1').that_comes_before('Service[network]') }
   end
 
 end

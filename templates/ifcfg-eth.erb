@@ -3,7 +3,8 @@
 ###
 DEVICE=<%= @interface %>
 BOOTPROTO=<%= @bootproto %>
-<% if @macaddress and @macaddress != '' %>HWADDR=<%= @macaddress %>
+<% if @manage_hwaddr and @macaddress and @macaddress != '' -%>
+HWADDR=<%= @macaddress %>
 <% end -%>
 ONBOOT=<%= @onboot %>
 HOTPLUG=<%= @onboot %>
@@ -55,6 +56,12 @@ TYPE=Ethernet
 check_link_down() {
  return 1;
 }
+<% end -%>
+<% if @defroute %>DEFROUTE=<%= @defroute %>
+<% end -%>
+<% if @zone %>ZONE=<%= @zone %>
+<% end -%>
+<% if @metric %>METRIC=<%= @metric %>
 <% end -%>
 NM_CONTROLLED=no
 <% if !@vlan %>VLAN=no

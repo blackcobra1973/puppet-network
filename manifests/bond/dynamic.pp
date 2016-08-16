@@ -10,6 +10,10 @@
 #   $mtu          - optional
 #   $ethtool_opts - optional
 #   $bonding_opts - optional
+#   $zone         - optional
+#   $metric       - optional
+#   $defroute     - optional
+
 #
 # === Actions:
 #
@@ -36,6 +40,9 @@ define network::bond::dynamic (
   $ethtool_opts = undef,
   $bonding_opts = 'miimon=100',
   $vlan = false,
+  $zone = undef,
+  $defroute = undef,
+  $metric = undef
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -54,6 +61,9 @@ define network::bond::dynamic (
     ethtool_opts => $ethtool_opts,
     bonding_opts => $bonding_opts,
     vlan         => $vlan,
+    zone         => $zone,
+    defroute     => $defroute,
+    metric       => $metric,
   }
 
   # Only install "alias bondN bonding" on old OSs that support

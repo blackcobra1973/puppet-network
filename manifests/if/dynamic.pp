@@ -6,6 +6,7 @@
 #
 #   $ensure          - required - up|down
 #   $macaddress      - optional - defaults to macaddress_$title
+#   $manage_hwaddr   - optional - defaults to true
 #   $bootproto       - optional - defaults to "dhcp"
 #   $userctl         - optional - defaults to false
 #   $mtu             - optional
@@ -14,6 +15,9 @@
 #   $peerdns         - optional
 #   $linkdelay       - optional
 #   $check_link_down - optional
+#   $zone            - optional
+#   $metric          - optional
+#   $defroute        - optional
 #
 # === Actions:
 #
@@ -43,6 +47,7 @@
 define network::if::dynamic (
   $ensure,
   $macaddress      = undef,
+  $manage_hwaddr   = true,
   $bootproto       = 'dhcp',
   $userctl         = false,
   $mtu             = undef,
@@ -51,7 +56,10 @@ define network::if::dynamic (
   $peerdns         = false,
   $linkdelay       = undef,
   $check_link_down = false,
-  $vlan = false,
+  $vlan            = false,
+  $defroute        = undef,
+  $zone            = undef,
+  $metric          = undef
 ) {
   # Validate our regular expressions
   $states = [ '^up$', '^down$' ]
@@ -68,6 +76,7 @@ define network::if::dynamic (
   validate_bool($userctl)
   validate_bool($peerdns)
   validate_bool($vlan)
+  validate_bool($manage_hwaddr)
 
   network_if_base { $title:
     ensure          => $ensure,
@@ -75,6 +84,7 @@ define network::if::dynamic (
     netmask         => '',
     gateway         => '',
     macaddress      => $macaddy,
+    manage_hwaddr   => $manage_hwaddr,
     bootproto       => $bootproto,
     userctl         => $userctl,
     mtu             => $mtu,
@@ -84,5 +94,8 @@ define network::if::dynamic (
     linkdelay       => $linkdelay,
     check_link_down => $check_link_down,
     vlan            => $vlan,
+    defroute        => $defroute,
+    zone            => $zone,
+    metric          => $metric,
   }
 } # define network::if::dynamic
